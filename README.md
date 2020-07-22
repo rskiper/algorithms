@@ -1,2 +1,1 @@
-# algotasks
-Decisions of different algoritmic tasks. 
+# algorithmic tasks
