@@ -110,6 +110,11 @@ public:
 		if (last < i - 1)
 			last = i - 1;
 	}
+
+	~ExtraLong2()
+	{
+		delete[] s;
+	}
 };
 
 
@@ -120,29 +125,29 @@ int _tmain(int argc, _TCHAR* argv[])
 	cin >> n;	//digits
 	cin >> k;	//base
 
+	ExtraLong2 zero0(n);
+	zero0.Set(1);	//number of cases when 0 is in this position(except most significant digit)
+	ExtraLong2 nonzero0(n);
+	nonzero0.Set(k - 1);	//number of cases when it's not '0'
+	ExtraLong2 zero1(n);
+	ExtraLong2 nonzero1(n);
+
+	//count the number of possible allocations for k-based digits in i-digit number, using value for (i-1)-digit number, counted earlier
+	for (int i = 2; i <= n; i++)
 	{
-		ExtraLong2 zero0(n);
-		zero0.Set(1);	//number of cases when 0 is in this position(except most significant digit)
-		ExtraLong2 nonzero0(n);
-		nonzero0.Set(k - 1);	//number of cases when it's not '0'
-		ExtraLong2 zero1(n);
-		ExtraLong2 nonzero1(n);
+		zero1 = nonzero0;	//'0' can be in new digit only if next digit is not '0'
+		nonzero1 = zero0;	//number of allocations when new digit is not '0': nonzero1=(zero0+nonzero0)*(k-1)
+		nonzero1.Add(nonzero0);
+		nonzero1.Multiply(k - 1);
 
-		//count the number of possible allocations for k-based digits in i-digit number, using value for (i-1)-digit number, counted earlier
-		for (int i = 2; i <= n; i++)
-		{
-			zero1 = nonzero0;	//'0' can be in new digit only if next digit is not '0'
-			nonzero1 = zero0;	//number of allocations when new digit is not '0': nonzero1=(zero0+nonzero0)*(k-1)
-			nonzero1.Add(nonzero0);
-			nonzero1.Multiply(k - 1);
-
-			zero0 = zero1;
-			nonzero0 = nonzero1;
-		}
-
-		char* r = nonzero0.Get();
-		for (int j = 0; j < nonzero0.Length(); j++)	//printing the result
-			cout << (int)r[j];
+		zero0 = zero1;
+		nonzero0 = nonzero1;
 	}
+
+	char* r = nonzero0.Get();
+	for (int j = 0; j < nonzero0.Length(); j++)	//printing the result
+		cout << (int)r[j];
+
+	delete[] r;
 	return 0;
 }

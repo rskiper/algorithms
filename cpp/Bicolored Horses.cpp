@@ -64,7 +64,7 @@ int FindOptimal(int first, int m)
 		s = white*black;
 		if (joined < m)	//finding optimal allocation for rest (m-joined-1) groups
 		{	//if it was found once, the value is taken from array without function calling
-			s += (optimal_accocations[first + joined + 1][m - joined - 1]>0) ?
+			s += (optimal_allocations[first + joined + 1][m - joined - 1]>0) ?
 				optimal_allocations[first + joined + 1][m - joined - 1] : FindOptimal(first + joined + 1, m - joined);
 		}
 
@@ -100,7 +100,7 @@ int main()
 	h = 0;
 	for (int p : grouping)	//copying values from list to dynamic array
 		horses[h++] = p;
-	
+
 	mm = g - k;	//amount of horse's groups without personal stable, we need to mix them with other groups
 	int res = 0;	//if all group have it's personal stable, everyone is happy
 	if (mm > 0)	//else find optimal allocation
@@ -112,5 +112,10 @@ int main()
 		res = FindOptimal(0, mm);
 	}
 	cout << res;
+
+	delete[] horses;
+	for (int i = 0; i < g; i++)
+		delete[] optimal_allocations[i];
+	delete[] optimal_allocations;
 	return 0;
 }

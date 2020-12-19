@@ -156,6 +156,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout << weights[0] << endl;
 	cout << res;
 
+	delete[] radii[0];
+	delete[] radii[1];
+	delete[] weights;
+	delete[] links;
 	return 0;
 }
 

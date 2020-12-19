@@ -126,5 +126,6 @@ int main()
 	double distance = (ox + oy - c * 2) * 100 + c * 100 * sqrt(2);
 	cout << round(distance);
 
+	delete[] s;
 	return 0;
 }

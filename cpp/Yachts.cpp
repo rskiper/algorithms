@@ -86,6 +86,7 @@ int main()
 	}
 	cout << orders << " " << store_pay;
 
+	delete[] a;
 	return 0;
 }
 
